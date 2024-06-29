@@ -6,36 +6,61 @@ pygame.init()
 
 FPS = 60
 
-width, height = 800, 800
-rows = 4
-cols = 4
+WIDTH, HEIGHT = 800, 800
+ROWS = 4
+COLS = 4
 
-rect_height = height//rows
-rect_width = width//rows
+RECT_HEIGHT = HEIGHT//ROWS
+RECT_WIDTH = WIDTH//ROWS
 
-outline_color = (187, 173, 160)
-outline_thickness = 10
-background_color = (205, 192, 180)
-font_color = (119, 110, 101)
+OUTLINE_COLOR = (187, 173, 160)
+OUTLINE_THICKNESS = 7
+BACKGROUND_COLOR = (205, 192, 180)
+FONT_COLOR = (119, 110, 101)
 
-font = pygame.font.SysFont("helvetica", 60, bold= True)
-move_vel = 20
+FONT = pygame.font.SysFont("helvetica", 60, bold= True)
+MOVE_VEL = 20
 
-window = pygame.display.set_mode((width, height))
+WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("2048")
 
-def main():
-    clock = pygame.time.clock()
+
+def draw_grid(window):
+    for row in range(ROWS):
+        y = row * RECT_HEIGHT
+        pygame.draw.line(window, OUTLINE_COLOR, (0,y), (WIDTH, y), OUTLINE_THICKNESS)
+        
+    for cols in range(COLS):
+        x = cols * RECT_WIDTH
+        pygame.draw.line(window, OUTLINE_COLOR, (x,0), (x, HEIGHT), OUTLINE_THICKNESS)
+
+
+    pygame.draw.rect(window, OUTLINE_COLOR, (0, 0, WIDTH, HEIGHT), OUTLINE_THICKNESS)
+
+def draw(window):
+    window.fill(BACKGROUND_COLOR)
+    draw_grid(window)
+    pygame.display.update()
+
+
+
+
+def main(window):
+    clock = pygame.time.Clock()
     run = True
 
     while run:
         clock.tick(FPS)
 
         for event in pygame.event.get():
+            print(event.type)
             if event.type == pygame.QUIT:
                 run = False
-                break
-        pygame.quit()
+                break 
+
+        draw(window)
+
+    pygame.quit()
 
 if __name__ == "__main__":
-    main(window)
+    main(WINDOW)
