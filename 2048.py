@@ -195,6 +195,17 @@ def move_tiles(window, tiles, clock, direction):
 
         update_tiles(window, tiles, sorted_tiles)
 
+        if len(tiles) == 16:
+            window.fill((0, 0, 0))  
+            game_over_text = "GAME OVER!!!"
+            font = pygame.font.Font(None, 70)
+            text_surface = font.render(game_over_text, True, (255, 0, 0))
+            window.blit(text_surface, (WIDTH // 2 - text_surface.get_width() // 2, HEIGHT // 2))
+            pygame.display.flip()
+            pygame.time.delay(2000)
+            return "lost"
+
+
     return end_move(tiles)
 
 
